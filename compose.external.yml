@@ -1,0 +1,6 @@
+services:
+  gluetun:
+    container_name: gluetor-ext-gluetun
+
+  qbt:
+    container_name: gluetor-ext-qbt
