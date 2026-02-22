@@ -7,7 +7,7 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
     volumes:
-      - ${SCRIPTS_DIR:?scripts directory is not set}:/scripts:ro
+      - ${SCRIPTS_DIR:-./scripts}:/scripts:ro
     expose:
       - &qbt_port ${WEBUI_PORT:-8080}
       - &torrent_port ${TORRENTING_PORT:-6881}
