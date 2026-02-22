@@ -36,8 +36,8 @@ services:
   qbt:
     image: lscr.io/linuxserver/qbittorrent:${QBITTORRENT_VERSION:-latest}
     environment:
-      PUID: ${PUID:-1124}
-      PGID: ${PGID:-1250}
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
       WEBUI_PORT: *qbt_port
       TORRENTING_PORT: *torrent_port
       TZ: *TZ
