@@ -3,7 +3,7 @@
   "extends": [
     "config:best-practices",
     "default:automergeDigest",
-    "default:automergeBranchPush"
+    ":automergeBranch"
   ],
   "minimumReleaseAge": "2 days",
   "ignoreTests": true,
