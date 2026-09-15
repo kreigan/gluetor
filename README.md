@@ -19,7 +19,7 @@ for port forwarding to work. For new installations, put a default config file in
 
 |Service|Image|Description|
 |-|-|-|
-|`gluetun`|`qmcgaw/gluetun`|A VPN client container using Gluetun.|
+|`gluetun`|[`ghcr.io/kreigan/gluetor`](https://github.com/kreigan/gluetor/pkgs/container/gluetor)|`qmcgaw/gluetun` with the port-forwarding hook scripts baked in.|
 |`qbt`|`linuxserver/qbittorrent`|A qBittorrent client container.|
 
 ## Environment Variables
@@ -34,16 +34,9 @@ Put the following variables in the respective environment files.
 |`WIREGUARD_ADDRESSES`|+||ProtonVPN assigned Wireguard address.|
 |`QBT_CONFIG`|+||The path to the qBittorrent configuration directory on the host.|
 |`QBT_DOWNLOADS`|+||The path to the qBittorrent downloads directory on the host.|
-|`SCRIPTS_DIR`||./scripts|The path to the directory containing the startup scripts on the host (see below).|
+|`GLUETOR_VERSION`||`latest`|The image to use.|
 |`PUID`||`1000`|The user ID for qBittorrent to run as inside the container.|
 |`PGID`||`1000`|The group ID for qBittorrent to run as inside the container.|
 |`WEBUI_PORT`||`8080`|The port to expose the qBittorrent WebUI on.|
 |`TORRENTING_PORT`||`6881`|The port to expose for torrenting.|
 |`TZ`||`Other/UTC`|The timezone to use in the containers.|
-
-## Startup Scripts
-
-This repository was created for use with Portainer and its "Stack" feature. Unfortunately,
-Portainer CE does not support mounting folders from Git repositories (or at least, I
-couldn't figure out how to do it), so I solved this by cloning the repository to the host
-and feeding the path to the `scripts` directory as an environment variable `SCRIPTS_DIR`.

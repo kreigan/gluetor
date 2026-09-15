@@ -2,6 +2,7 @@
 
 FORWARDED_PORT="$1"
 VPN_INTERFACE="$2"
+WEBUI_URL="http://127.0.0.1:${WEBUI_PORT:-8080}"
 
 echo "new port $FORWARDED_PORT on interface $VPN_INTERFACE"
 
@@ -23,6 +24,10 @@ EOF
 echo "Updating qBittorrent settings: $payload"
 
 wget -O- \
+    --timeout=10 \
+    --tries=5 \
     --retry-connrefused \
+    --header "Referer: ${WEBUI_URL}" \
+    --header "Origin: ${WEBUI_URL}" \
     --post-data "json=$payload" \
-    http://127.0.0.1:${WEBUI_PORT:-8080}/api/v2/app/setPreferences 2>&1
+    "${WEBUI_URL}/api/v2/app/setPreferences" 2>&1

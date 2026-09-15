@@ -1,37 +1,25 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
 services:
   gluetun:
-    image: qmcgaw/gluetun:${GLUETUN_VERSION:-latest}
+    image: ghcr.io/kreigan/gluetor:${GLUETOR_VERSION:-latest}
     cap_add:
       - NET_ADMIN
     devices:
       - /dev/net/tun:/dev/net/tun
-    volumes:
-      - ${SCRIPTS_DIR:-./scripts}:/scripts:ro
     expose:
       - &qbt_port ${WEBUI_PORT:-8080}
       - &torrent_port ${TORRENTING_PORT:-6881}
     ports:
       - ${WEBUI_PORT:-8080}:${WEBUI_PORT:-8080}
     environment:
-      VPN_SERVICE_PROVIDER: protonvpn
-      VPN_TYPE: wireguard
-      VPN_INTERFACE: wg0
       WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY:?wireguard private key is not set}
       WIREGUARD_ENDPOINT_IP: ${WIREGUARD_ENDPOINT_IP:?wireguard endpoint ip is not set}
       WIREGUARD_PUBLIC_KEY: ${WIREGUARD_PUBLIC_KEY:?wireguard public key is not set}
       WIREGUARD_ADDRESSES: ${WIREGUARD_ADDRESSES:?wireguard address is not set}
-      VPN_PORT_FORWARDING: on
-      VPN_PORT_FORWARDING_UP_COMMAND: /bin/sh -c '/scripts/port_up.sh {{PORT}} {{VPN_INTERFACE}}'
-      VPN_PORT_FORWARDING_DOWN_COMMAND: /bin/sh -c /scripts/port_down.sh
-      HTTPPROXY: off
-      SHADOWSOCKS: off
       TZ: &TZ ${TZ:-Other/UTC}
       WEBUI_PORT: *qbt_port
     restart: always
     pull_policy: always
-    labels:
-      autoheal: true
 
   qbt:
     image: lscr.io/linuxserver/qbittorrent:${QBITTORRENT_VERSION:-latest}
@@ -50,5 +38,6 @@ services:
     depends_on:
       gluetun:
         condition: service_healthy
+        restart: true
     labels:
       autoheal: true
