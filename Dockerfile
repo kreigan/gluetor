@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1
+# syntax=docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
 FROM qmcgaw/gluetun:v3.41.3@sha256:1baa76576dea1dfbafbd62bb635daf40fd87171f63273c2fdfe630418783011e
 
 COPY scripts/ /scripts/
